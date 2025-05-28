@@ -2,7 +2,7 @@ name: Generate SBOM
 
 on:
   push:
-    branches: [main]
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -20,8 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Install CycloneDX SBOM generator
+        run: npm install -g cyclonedx-node-module
+
       - name: Generate SBOM
-        run: npx @cyclonedx/bom -o sbom.json
+        run: cyclonedx-bom -o sbom.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
